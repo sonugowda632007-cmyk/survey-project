@@ -1,0 +1,86 @@
+{% extends 'survey/base.html' %}
+
+{% block title %}Survey Results{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Survey Results</h2>
+
+<div class="row mb-4">
+
+    <div class="col-md-6">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5>Total Responses</h5>
+                <h2>{{ total_responses }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5>Average Rating</h5>
+                <h2>
+                    {% if average_rating %}
+                        {{ average_rating|floatformat:2 }} / 5
+                    {% else %}
+                        No ratings yet
+                    {% endif %}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <h4 class="mb-3">Submitted Responses</h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Technology</th>
+                        <th>Rating</th>
+                        <th>Feedback</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for response in responses %}
+                        <tr>
+                            <td>{{ response.name }}</td>
+                            <td>{{ response.email }}</td>
+                            <td>{{ response.technology }}</td>
+                            <td>{{ response.get_rating_display }}</td>
+                            <td>{{ response.feedback }}</td>
+                            <td>{{ response.submitted_at }}</td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                No survey responses available.
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
